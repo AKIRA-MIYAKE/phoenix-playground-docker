@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    command: bash -c "cd /code/app && mix phoenix.server"
+    environment:
+      MIX_ENV: dev
+    ports:
+      - '4000:4000'
+    volumes:
+      - .:/code
+    links:
+      - postgres
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: app
+    ports:
+      - '5432:5432'
